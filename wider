@@ -1,0 +1,12 @@
+#!/bin/bash
+if [ -z "$1" ]; then
+    add=15
+else
+    add=$1
+fi
+
+width=$(tput cols)
+height=$(tput lines)
+new=$(($width+$add))
+
+printf "\e[8;$height;$new;t"

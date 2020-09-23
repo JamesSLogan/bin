@@ -1,0 +1,26 @@
+#!/bin/bash
+out=$(pgrep jupyter)
+
+pids=()
+i=0
+for line in $out; do
+    pids[$i]=$line
+    ((i++))
+done
+
+if [[ $i -gt 0 ]]; then
+    if [[ $i -eq 1 ]]; then
+        msg="this process"
+    else
+        msg="these processes"
+    fi
+    echo -ne "Kill $msg: ${pids[*]}?\nEnter y/Y to kill or anything else to continue: "
+
+    read input
+
+    if [[ $input == "y" ]] || [[ $input == "Y" ]]; then
+        kill ${pids[*]}
+    fi
+fi
+
+exec jupyter notebook >/dev/null 2>&1 &

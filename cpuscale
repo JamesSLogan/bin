@@ -1,0 +1,32 @@
+#!/bin/bash
+if [[ $(whoami) != "root" ]]; then
+    echo "sudo !!"
+    exit
+fi
+
+dir=$1
+if [[ "$dir" == "up" ]]; then
+    value="performance"
+elif [[ "$dir" == "down" ]]; then
+    value="powersave"
+elif [[ "$dir" == "cat" ]]; then
+    value="cat"
+else
+    echo "input has to be 'up', 'down', or 'cat'"
+    exit 1
+fi
+
+cd /sys/devices/system/cpu/cpufreq/ || exit 1
+
+for i in */scaling_governor; do
+    prev=$(cat $i)
+
+    if [[ $value == "cat" ]]; then
+        echo "$prev"
+        continue
+    fi
+
+    echo $value >$i
+    curr=$(cat $i)
+    echo "$i: $prev -> $curr"
+done

@@ -4,17 +4,19 @@ if [[ $(whoami) != "root" ]]; then
     exit
 fi
 
-dir=$1
-if [[ "$dir" == "up" ]]; then
+desired_state=$1
+if [[ "$desired_state" == "up" ]]; then
     value="performance"
-elif [[ "$dir" == "down" ]]; then
+elif [[ "$desired_state" == "down" ]]; then
     value="powersave"
-elif [[ "$dir" == "half" ]]; then
+elif [[ "$desired_state" == "half" ]]; then
     value="half"
-elif [[ "$dir" == "cat" ]]; then
+elif [[ "$desired_state" == "one" ]]; then
+    value="one"
+elif [[ "$desired_state" == "cat" ]]; then
     value="cat"
 else
-    echo "input has to be 'up', 'down', 'half', or 'cat'"
+    echo "input has to be 'up', 'down', 'half', 'one', or 'cat'"
     exit 1
 fi
 
@@ -32,6 +34,13 @@ for i in */scaling_governor; do
 
     if [[ $value == "half" ]]; then
         if [[ $((count % 2)) -eq 1 ]]; then
+            write_value="performance"
+        else
+            write_value="powersave"
+        fi
+
+    elif [[ $value == "one" ]]; then
+        if [[ $count -eq 1 ]]; then
             write_value="performance"
         else
             write_value="powersave"

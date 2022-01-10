@@ -1,0 +1,9 @@
+[alias]
+	s = status
+[user]
+	name = James Logan
+	email = jamesstanleylogan@gmail.com
+[diff]
+    external = git_diff_wrapper
+[pager]
+    diff =

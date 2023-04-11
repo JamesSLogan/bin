@@ -1,0 +1,14 @@
+#!/bin/bash
+# reduce WSL memory load
+
+main() {
+    echo 3 >/proc/sys/vm/drop_caches
+}
+
+sync
+
+if [[ $(whoami) == root ]]; then
+    main "$@"
+else
+    sudo $0 "$@"
+fi

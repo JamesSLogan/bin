@@ -1,0 +1,27 @@
+#!/bin/bash
+fname="$1"
+if ! [ -e "$fname" ]; then
+    echo "ERROR: '$fname' does not exist."
+    exit 1
+fi
+
+if [ -n "$2" ]; then
+    prev=""
+else
+    prev=$(cksum "$fname")
+fi
+
+count=1
+while true; do
+    sleep 1
+
+    curr=$(cksum "$fname")
+    if [[ "$prev" != "$curr" ]]; then
+        echo "# $count:"
+        echo "#############################################"
+        $fname
+        echo
+        ((count++))
+    fi
+    prev="$curr"
+done

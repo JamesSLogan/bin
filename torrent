@@ -1,0 +1,15 @@
+#!/bin/bash
+
+
+# conda create -n torrent -c conda-forge python=3.10
+source activate torrent || exit 1
+
+url=$1
+if [ -z "$url" ]; then
+    echo "specify URL as only parameter"
+    exit 1
+fi
+
+loc='/mnt/c/Users/twool/OneDrive/Documents/'
+
+python -c "import asyncio;from torrentp import TorrentDownloader; torrent_file = TorrentDownloader('$url', '$loc', stop_after_download=True); asyncio.run(torrent_file.start_download(upload_speed=0))"

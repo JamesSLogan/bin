@@ -1,2 +1,3 @@
 #!/bin/sh
+#diff "$2" "$5"
 vimdiff -R "$2" "$5"

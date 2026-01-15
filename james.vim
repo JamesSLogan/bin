@@ -36,6 +36,7 @@ hi Character   ctermfg=142  ctermbg=NONE  cterm=NONE
 
 hi pythonFunction   ctermfg=34
 "hi pythonExceptions ctermfg=154
+hi pythonEscape ctermfg=81
 
 "
 "Vim Stuff
